@@ -1,9 +1,6 @@
 import sys
-import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 import numpy as np
-from matplotlib import cm
-from mpl_toolkits.mplot3d import Axes3D
 import pandas as pd
 
 class GPR:
@@ -69,13 +66,34 @@ if __name__ == '__main__':
         data = pd.DataFrame([[sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], sys.argv[7]]])
         data.to_csv('OptimizationRecord.txt', mode='a', sep=' ', header=False, index=False)
 
-        data = pd.read_table('OptimizationRecord.txt', sep=' ', header=False, index=False)
-        X = np.array(data)
+        data = pd.read_table('OptimizationRecord.txt', header=None)
+        # TODO: not fixed yet
+        X = np.array(np.split(data))
         trainx = X[:, 0:5]
         trainy = X[:, 6:7].T
         gpr.fit(trainx, trainy)
+
+        m = 0
+        c = 0
+        return_data = pd.DataFrame[[0,0,0,0,0,0]]
+        # todo: the para's data has not been verified
+        for pt in range(0,1):
+            for st in range(0,111):
+                for tt in range(0,222):
+                    for cs in (0,10):
+                        for q in range(0, 10, 0.1):
+                            for scale in range(10, 20):
+                                data = pd.DataFrame([[pt, st, tt, cs, q, scale]])
+                                nm, nc = gpr.predict()
+                                if nc > c:
+                                    c = nc
+                                    return_data = data
+        print(return_data)
+
     elif args == 7:
         newDate = pd.DataFrame[[sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6]]]
         m, c = gpr.predict(newDate)
+        # todo: the output here is not sure yet
+        print(m, c)
 
 
