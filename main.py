@@ -3,6 +3,7 @@ from scipy.optimize import minimize
 import numpy as np
 import pandas as pd
 
+
 class GPR:
 
     def __init__(self, optimize=True):
@@ -63,11 +64,11 @@ if __name__ == '__main__':
     gpr = GPR(optimize=False)
     if args == 8:
         gpr.optimize = False
-        data = pd.DataFrame([[sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], sys.argv[7]]])
+        data = pd.DataFrame(
+            [[sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], sys.argv[7]]])
         data.to_csv('OptimizationRecord.txt', mode='a', sep=' ', header=False, index=False)
 
         data = pd.read_table('OptimizationRecord.txt', header=None)
-        # TODO: not fixed yet
         X = np.array(np.split(data))
         trainx = X[:, 0:5]
         trainy = X[:, 6:7].T
@@ -75,25 +76,26 @@ if __name__ == '__main__':
 
         m = 0
         c = 0
-        return_data = pd.DataFrame[[0,0,0,0,0,0]]
+        return_data = pd.DataFrame[[0, 0, 0, 0, 0, 0]]
         # todo: the para's data has not been verified
-        for pt in range(0,1):
-            for st in range(0,111):
-                for tt in range(0,222):
-                    for cs in (0,10):
-                        for q in range(0, 10, 0.1):
+        for pt in range(0, 1):
+            for st in range(0, 111):
+                for tt in range(0, 211):
+                    for cs in (0, 42):
+                        for q in np.arange(0.0, 10.0, 0.1):
                             for scale in range(10, 20):
                                 data = pd.DataFrame([[pt, st, tt, cs, q, scale]])
-                                nm, nc = gpr.predict()
+                                nm, nc = gpr.predict(data)
                                 if nc > c:
                                     c = nc
                                     return_data = data
-        print(return_data)
+        if c < 0.1:
+            print("The model has been trained")
+        else:
+            print(return_data.loc[0].to_string(index=False))
 
     elif args == 7:
         newDate = pd.DataFrame[[sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6]]]
         m, c = gpr.predict(newDate)
-        # todo: the output here is not sure yet
-        print(m, c)
-
-
+        print(m)
+        print(c)
