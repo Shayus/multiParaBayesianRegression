@@ -77,7 +77,6 @@ if __name__ == '__main__':
         m = 0
         c = 0
         return_data = pd.DataFrame[[0, 0, 0, 0, 0, 0]]
-        # todo: the para's data has not been verified
         for pt in range(0, 1):
             for st in range(0, 111):
                 for tt in range(0, 211):
@@ -89,6 +88,7 @@ if __name__ == '__main__':
                                 if nc > c:
                                     c = nc
                                     return_data = data
+        # TODO： 这里的参数需要根据需求修改
         if c < 0.1:
             print("The model has been trained")
         else:
