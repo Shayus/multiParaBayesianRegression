@@ -49,11 +49,19 @@ for test
 
 
 参数 参考
+
 	patterntype    //0 or 1 int
+
 	Style   //0 - 111 int
+
 	tilingtype   //0 - 211 int
+
 	Cutstyle    //0 - 42 int                                “1”印花（0-18）； “2”提花 （19-32） ；“3” 针织（33-42）  
+	
 	Q    //0 - 10 float  
+
 	Scale    //12 - 18 int
+
 	Xmin    //-10 - +10 float
+
 	Ymin   //-10 - +10 float
