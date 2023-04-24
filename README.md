@@ -51,8 +51,14 @@ for test
 
 代码采用int， 不深入浮点数的情况下，输入一组参数需要运算超过50G次运算
 
-建议缩小范围
+看了一下python的多线程方法，python的多线程机制比较适合I/O多的情况
 
+# Usage
+先使用脚本循环生成 (patterntype, style, tilingtype, cutstyle, Q, scale, xmin, ymin, value) 超多个结果
+
+把结果存到OptimizationRecord.txt 文件中
+
+直接使用贝叶斯预测, 能够返回该值下预测分数以及偏差大小
 
 参数 参考
 

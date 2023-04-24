@@ -7,7 +7,7 @@ import pandas as pd
 class GPR:
 
     def __init__(self, optimize=True):
-        self.is_fit = False
+        #self.is_fit = False
         self.train_X, self.train_y = None, None
         self.params = {"l": 0.5, "sigma_f": 0.2}
         self.optimize = optimize
@@ -31,7 +31,7 @@ class GPR:
                            method='L-BFGS-B')
             self.params["l"], self.params["sigma_f"] = res.x[0], res.x[1]
 
-        self.is_fit = True
+        #self.is_fit = True
 
     def predict(self, X):
         if not self.is_fit:
@@ -70,38 +70,37 @@ if __name__ == '__main__':
             [[sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], sys.argv[7],
               sys.argv[8],sys.argv[9]]])
         data.to_csv('OptimizationRecord.txt', mode='a', sep=',', header=False, index=False)
-
+        print("saved")
         # 将所有txt中数据读到data中
-        data = pd.read_csv('OptimizationRecord.txt', header=None)
-        trainx = data.loc[:, 0:7]
-        trainy = data.loc[:, 8]
-        trainx = np.array(trainx)
-        trainy = np.array(trainy).T
-        gpr.fit(trainx, trainy)
+        # data = pd.read_csv('OptimizationRecord.txt', header=None)
+        # trainx = data.loc[:, 0:7]
+        # trainy = data.loc[:, 8]
+        # trainx = np.array(trainx)
+        # trainy = np.array(trainy).T
+        # gpr.fit(trainx, trainy)
+        # m = 0
+        # c = 0
+        # return_data = pd.DataFrame([[0, 0, 0, 0, 0, 0, 0, 0]])
+        # for pt in range(0, 1):
+        #     for st in range(0, 111):
+        #         for tt in range(0, 211):
+        #             for cs in (0, 42):
+        #                 for q in np.arange(0, 10):
+        #                     for xmin in np.arange(-10, 10):
+        #                         for ymin in np.arange(-10, 10):
+        #                             for scale in range(12, 18):
+        #                                 data = pd.DataFrame([[pt, st, tt, cs, q,xmin, ymin, scale]])
+        #                                 nm, nc = gpr.predict(data)
+        #                                 if nc > c:
+        #                                     c = nc
+        #                                     return_data = data
+        # # TODO： 这里的参数需要根据需求修改
+        # if c < 0.1:
+        #     print("The model has been trained")
+        # else:
+        #     print(return_data.loc[0].to_string(index=False))
 
-        m = 0
-        c = 0
-        return_data = pd.DataFrame([[0, 0, 0, 0, 0, 0, 0, 0]])
-        for pt in range(0, 1):
-            for st in range(0, 111):
-                for tt in range(0, 211):
-                    for cs in (0, 42):
-                        for q in np.arange(0, 10):
-                            for xmin in np.arange(-10, 10):
-                                for ymin in np.arange(-10, 10):
-                                    for scale in range(12, 18):
-                                        data = pd.DataFrame([[pt, st, tt, cs, q,xmin, ymin, scale]])
-                                        nm, nc = gpr.predict(data)
-                                        if nc > c:
-                                            c = nc
-                                            return_data = data
-        # TODO： 这里的参数需要根据需求修改
-        if c < 0.1:
-            print("The model has been trained")
-        else:
-            print(return_data.loc[0].to_string(index=False))
-
-    elif args == 8:
+    elif args == 9:
         newDate = pd.DataFrame[[sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6]]]
         m, c = gpr.predict(newDate)
         print(m)
